@@ -14,7 +14,7 @@ using namespace cryptl;
 using namespace std;
 
 void printUsage(const char* exeName) {
-    cout << "usage: cat NIST_AEVAVS_test_file | "
+    cout << "usage: cat NIST_AESAVS_test_file | "
          << exeName
          << " -b 128|192|256 -m ECB|CBC|OFB|CFB"
          << endl;
@@ -53,7 +53,7 @@ bool runCipher(const string& blockMode,
     else if ("CFB" == blockMode)
         eval_text = CFB(T(), bkey, bIV, btext);
 
-    // compare output text and AEVAVS test case output
+    // compare output text and AESAVS test case output
     return outText == asciiHex(eval_text);
 }
 
