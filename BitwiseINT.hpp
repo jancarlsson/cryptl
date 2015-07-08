@@ -1,6 +1,7 @@
 #ifndef _CRYPTL_BITWISE_INT_HPP_
 #define _CRYPTL_BITWISE_INT_HPP_
 
+#include <array>
 #include <cassert>
 #include <climits>
 
@@ -30,6 +31,10 @@ public:
     // modulo addition
     static T ADDMOD(const T x, const T y) { return x + y; }
     static T _ADDMOD(const T x, const T y) { return ADDMOD(x, y); }
+
+    // modulo multiplication
+    static T MULMOD(const T x, const T y) { return x * y; }
+    static T _MULMOD(const T x, const T y) { return MULMOD(x, y); }
 
     // bitwise shift
     static T SHL(const T x, const unsigned int n) { return x << n; }
@@ -66,12 +71,32 @@ public:
     static T constant(const T x) { return x; }
     static T _constant(const T x) { return constant(x); }
 
+    // zero array
+    template <std::size_t N>
+    static std::array<T, N> zero(const std::array<T, N>& dummy) {
+        std::array<T, N> a;
+        for (auto& b : a) b = constant(0);
+        return a;
+    }
+
     // conversion between unsigned integer types
     template <typename U>
     static U xword(const T x, const U& dummy) { return x; }
 
     template <typename U>
     static U _xword(const T x, const U& dummy) { return xword(x, dummy); }
+
+    // conversion from bool
+    static T xword(const bool x) { return x; }
+    static T _xword(const bool x) { return xword(x); }
+
+    // negation
+    static T negate(const T x) { return -x; }
+    static T _negate(const T x) { return negate(x); }
+
+    // logical NOT
+    static bool NOT(const bool b) { return !b; }
+    static bool _NOT(const bool b) { return NOT(b); }
 
     // all mask bits take value of same bool
     static T bitmask(const bool b) { return b ? -1 : 0; }
