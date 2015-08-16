@@ -4,8 +4,6 @@
 #include <array>
 #include <cstdint>
 
-#include <cryptl/BitwiseLUT.hpp>
-
 namespace cryptl {
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -28,7 +26,7 @@ class AES_InvSBox
 {
 public:
     AES_InvSBox()
-        : m_lut(std::array<std::uint8_t, 256>{
+        : m_lut{
             // 00
             0x52, 0x09, 0x6a, 0xd5, 0x30, 0x36, 0xa5, 0x38,
             0xbf, 0x40, 0xa3, 0x9e, 0x81, 0xf3, 0xd7, 0xfb,
@@ -91,15 +89,15 @@ public:
 
             // f0
             0x17, 0x2b, 0x04, 0x7e, 0xba, 0x77, 0xd6, 0x26,
-            0xe1, 0x69, 0x14, 0x63, 0x55, 0x21, 0x0c, 0x7d })
+            0xe1, 0x69, 0x14, 0x63, 0x55, 0x21, 0x0c, 0x7d }
     {}
 
-    U operator() (const T& x) const {
-        return m_lut[x];
+    U operator() (const T& idx) const {
+        return BITWISE::lookuptable(m_lut, idx);
     }
 
 private:
-    const BitwiseLUT<T, U, std::uint8_t, BITWISE> m_lut;
+    const std::array<std::uint8_t, 256> m_lut;
 };
 
 } // namespace cryptl
