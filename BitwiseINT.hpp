@@ -4,6 +4,7 @@
 #include <array>
 #include <cassert>
 #include <climits>
+#include <cstdint>
 
 namespace cryptl {
 
@@ -95,8 +96,16 @@ public:
     static T _negate(const T x) { return negate(x); }
 
     // logical NOT
-    static bool NOT(const bool b) { return !b; }
-    static bool _NOT(const bool b) { return NOT(b); }
+    static bool logicalNOT(const bool b) { return !b; }
+    static bool _logicalNOT(const bool b) { return logicalNOT(b); }
+
+    // logical AND
+    static bool logicalAND(const bool a, const bool b) { return a && b; }
+    static bool _logicalAND(const bool a, const bool b) { return logicalAND(a, b); }
+
+    // logical OR
+    static bool logicalOR(const bool a, const bool b) { return a || b; }
+    static bool _logicalOR(const bool a, const bool b) { return logicalOR(a, b); }
 
     // all mask bits take value of same bool
     static T bitmask(const bool b) { return b ? -1 : 0; }
@@ -116,6 +125,28 @@ public:
 
     static bool _testbit(const T x, const unsigned int n) {
         return testbit(x, n);
+    }
+
+    // look-up table
+    template <typename X, std::size_t N>
+    static T lookuptable(const std::array<T, N>& a, const X idx) {
+        return a[idx];
+    }
+
+    template <typename X, std::size_t N>
+    static T _lookuptable(const std::array<T, N>& a, const X idx) {
+        return lookuptable(a, idx);
+    }
+
+    // array subscript
+    template <typename X, std::size_t N>
+    static T arraysubscript(const std::array<T, N>& a, const X idx) {
+        return a[idx];
+    }
+
+    template <typename X, std::size_t N>
+    static T _arraysubscript(const std::array<T, N>& a, const X idx) {
+        return arraysubscript(a, idx);
     }
 
     // multiplication by x in GF(2^n)
