@@ -161,6 +161,8 @@ std::string asciiHex(const std::array<T, N>& a, const bool space = false) {
 
 template <typename T>
 std::string asciiHex(const std::vector<T>& a, const bool space = false) {
+    if (a.empty()) return std::string();
+
     std::stringstream ss;
     DataPusher<PrintHex<false>> hexpr(ss);
 
