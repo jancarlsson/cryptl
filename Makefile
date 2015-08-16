@@ -15,11 +15,20 @@ LIBRARY_HPP = \
 	AES_SBox.hpp \
 	ASCII_Hex.hpp \
 	BitwiseINT.hpp \
-	BitwiseLUT.hpp \
 	Bless.hpp \
 	CipherModes.hpp \
 	DataPusher.hpp \
 	Digest.hpp \
+	ED25519.hpp \
+	ED25519_fe.hpp \
+	ED25519_gebase1.hpp \
+	ED25519_gebase2.hpp \
+	ED25519_gebase3.hpp \
+	ED25519_gebase4.hpp \
+	ED25519_gebase5.hpp \
+	ED25519_ge.hpp \
+	ED25519_sc.hpp \
+	NS_cryptl.hpp \
 	SHA.hpp \
 	SHA_1.hpp \
 	SHA_224.hpp \
@@ -32,6 +41,7 @@ LIBRARY_HPP = \
 default :
 	@echo Build options:
 	@echo make AESAVS
+	@echo make ED25519_test
 	@echo make SHAVS
 	@echo make install PREFIX=\<path\>
 	@echo make doc
@@ -44,6 +54,7 @@ doc : README.html
 
 CLEAN_FILES = \
 	AESAVS \
+	ED25519_test \
 	SHAVS \
 	README.html
 
@@ -68,6 +79,10 @@ cryptl :
 AESAVS : AESAVS.cpp cryptl
 	$(CXX) -c $(CXXFLAGS) $< -o AESAVS.o
 	$(CXX) -o $@ AESAVS.o
+
+ED25519_test : ED25519_test.cpp cryptl
+	$(CXX) -c $(CXXFLAGS) $< -o ED25519_test.o
+	$(CXX) -o $@ ED25519_test.o
 
 SHAVS : SHAVS.cpp cryptl
 	$(CXX) -c $(CXXFLAGS) $< -o SHAVS.o
