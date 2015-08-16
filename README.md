@@ -41,6 +41,7 @@ Cryptographic algorithms
 
 - [FIPS PUB 180-4]: SHA-1, SHA-224, SHA-256, SHA-384, SHA-512, SHA-512/224, SHA-512/256
 - [FIPS PUB 197]: AES-128, AES-192, AES-256
+- [Ed25519]: keypair, sign, open
 
 --------------------------------------------------------------------------------
 Library build instructions
@@ -96,6 +97,22 @@ Run the validation tests:
     $ ./SHAVS.sh SHAVS_testdata
 
 --------------------------------------------------------------------------------
+[Ed25519] test vectors
+--------------------------------------------------------------------------------
+
+Download the test vectors:
+
+    $ wget http://ed25519.cr.yp.to/python/sign.input
+
+Build the ED25519_test binary:
+
+    $ make ED25519_test
+
+Run the validation tests:
+
+    $ ./ED25519_test.sh sign.input
+
+--------------------------------------------------------------------------------
 References
 --------------------------------------------------------------------------------
 
@@ -112,3 +129,5 @@ References
 [Secure Hash Algorithm Validation System (SHAVS)]: http://csrc.nist.gov/groups/STM/cavp/documents/shs/SHAVS.pdf
 
 [Test Vectors for Hashing Byte-Oriented Messages]: http://csrc.nist.gov/groups/STM/cavp/documents/shs/shabytetestvectors.zip
+
+[Ed25519]: http://ed25519.cr.yp.to
