@@ -34,12 +34,11 @@ class SHA_Base
 public:
     virtual ~SHA_Base() = default;
 
-    static void padMessage(std::ostream& os, std::size_t& lengthBits) {
-        // message size is limited to < 2^64 bits in this implementation
-        const std::uint64_t msgLengthBits = lengthBits;
-
+    static void padMessage(std::ostream& os,
+                           const std::uint64_t msgLengthBits,
+                           std::size_t& lengthBits) {
         // append bit "1" to end of message
-        append(os, lengthBits, 0x80);
+        if (msgLengthBits == lengthBits) append(os, lengthBits, 0x80);
 
         // keep padding zero bits to the length block at the end
         const std::size_t stopPadBits = blockSizeBits() - 2 * wordSizeBits();
@@ -56,6 +55,11 @@ public:
         for (int i = 7; i >= 0; --i) {
             append(os, lengthBits, (msgLengthBits >> i * CHAR_BIT) & 0xff);
         }
+    }
+
+    static void padMessage(std::ostream& os,
+                           std::size_t& lengthBits) {
+        padMessage(os, lengthBits, lengthBits);
     }
 
     static bool padNeeded(const std::size_t lengthBits) {
